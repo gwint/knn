@@ -4,6 +4,15 @@
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
+#include <sstream>
+
+int DataParser::parseAsInt(std::string value) {
+	std::stringstream ss(value);
+	int intValue = 0;
+	ss >> intValue;
+
+	return intValue;
+}
 
 Data Data::retrieveFromFile(std::string filename) {
 	Data data;
@@ -12,7 +21,11 @@ Data Data::retrieveFromFile(std::string filename) {
 
 	if(fileStream.is_open()) {
 		for(std::string row; getline(fileStream, row);) {
-			std::cout << row << '\n';
+			std::string colValue;
+			for(std::stringstream colStream(row); getline(colStream, colValue, ',');) {
+				int colParsedValue = DataParser::parseAsInt(colStream.str());
+				std::cout << colParsedValue << '\n';
+			}
 		}
 	}
 	else {
@@ -20,4 +33,13 @@ Data Data::retrieveFromFile(std::string filename) {
 	}
 
 	return data;
+}
+
+std::vector<int> Data::getDimensions() {
+	std::vector<int> dimensions;
+	return dimensions;
+}
+
+int Data::getValue(int indices...) {
+	return 0;
 }
