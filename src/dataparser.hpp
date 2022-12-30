@@ -9,9 +9,9 @@
    Meant to be created via the retrieveFromFile static method. */
 class Data {
 	private: 
-		std::vector<int> trainingData;
-		std::vector<int> trainingResults;
-		std::vector<int> testingData;
+		std::vector<int> dimensions;
+		std::vector<int> inputVectors;
+		std::vector<int> classifications;
 
 	public:
 		static Data retrieveFromFile(std::string filename);
@@ -20,8 +20,9 @@ class Data {
 		// input data consists of 2 sets of 3 rows and 4 columns.  A typical
 		// set of table data with rows and columns would look like [2, 3] 
 		// (2 samples, and 3 values per sample)
-		std::vector<int> getDimensions();
-		int getValue(int indices...);
+		std::vector<int>& getDimensions();
+		std::vector<int>& getInputVectors();
+		int getValue(std::vector<int> indices);
 };
 
 /* Utility class for handling all data parsing for input data.  Will handle any alterations
