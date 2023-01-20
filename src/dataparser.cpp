@@ -15,7 +15,7 @@ int DataParser::parseAsInt(std::string value) {
 	return intValue;
 }
 
-Data Data::retrieveFromFile(std::string filename) {
+Data Data::retrieveFromCSVFile(std::string filename) {
 	Data data;
 	std::ifstream fileStream;
 	fileStream.open(filename);

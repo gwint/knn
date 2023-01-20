@@ -14,7 +14,7 @@ class Data {
 		std::vector<int> classifications;
 
 	public:
-		static Data retrieveFromFile(std::string filename);
+		static Data retrieveFromCSVFile(std::string filename);
 		// Collection of number of elements along each axis for each
 		// dimension in data cube.  e.g [2, 3, 4] for a dataset whose
 		// input data consists of 2 sets of 3 rows and 4 columns.  A typical

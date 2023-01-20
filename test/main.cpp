@@ -9,7 +9,7 @@ TEST(data, testDataReadFromFile_getDimensions) {
 }
 
 TEST(data, testDataReadFromFile_getValue) {
-	Data data = Data::retrieveFromFile("testdatafile.txt");
+	Data data = Data::retrieveFromCSVFile("testdatafile.txt");
 	EXPECT_EQ(data.getValue(std::vector<int>{0, 0}), 1);
 	EXPECT_EQ(data.getValue(std::vector<int>{0, 1}), 2);
 	EXPECT_EQ(data.getValue(std::vector<int>{0, 2}), 3);
