@@ -1,15 +1,17 @@
 #include "../src/dataparser.hpp"
+#include "../src/distancemetric.hpp"
 
 #include <gtest/gtest.h>
+#include <math.h>
 
 TEST(data, testDataReadFromFile_getDimensions) {
-	Data data = Data::retrieveFromFile("testdatafile.txt");
+	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
 	std::vector<int> dimensions = data.getDimensions();
    	EXPECT_EQ(dimensions.size(), 2);	
 }
 
 TEST(data, testDataReadFromFile_getValue) {
-	Data data = Data::retrieveFromCSVFile("testdatafile.txt");
+	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
 	EXPECT_EQ(data.getValue(std::vector<int>{0, 0}), 1);
 	EXPECT_EQ(data.getValue(std::vector<int>{0, 1}), 2);
 	EXPECT_EQ(data.getValue(std::vector<int>{0, 2}), 3);
@@ -17,6 +19,26 @@ TEST(data, testDataReadFromFile_getValue) {
 	EXPECT_EQ(data.getValue(std::vector<int>{1, 1}), 5);
 	EXPECT_EQ(data.getValue(std::vector<int>{1, 2}), 6);
 }
+
+TEST(data, testEuclideanDistance_2d_distance) {
+	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
+
+	DistanceMetric* euclideanDist = new EuclideanDistanceMetric();
+	std::vector<int> sample1{0, 0};
+	std::vector<int> sample2{0, 1};
+	EXPECT_EQ(euclideanDist->distance(sample1, sample2), 1);
+}
+
+TEST(data, testEuclideanDistance_3d_distance) {
+	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
+
+	DistanceMetric* euclideanDist = new EuclideanDistanceMetric();
+	std::vector<int> sample1{0, 0, 0};
+	std::vector<int> sample2{3, 3, 3};
+	EXPECT_EQ(euclideanDist->distance(sample1, sample2), sqrt(27));
+}
+
+
 
 int main(int argc, char** argv) {
 	::testing::InitGoogleTest(&argc, argv);

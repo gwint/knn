@@ -6,7 +6,12 @@
 #include "dataparser.hpp"
 
 class DistanceMetric {
-	virtual int distance(Data, const std::vector<int>&, const std::vector<int>&);
-}
+	public:
+	virtual	double distance(const std::vector<int>& sample1, const std::vector<int>& sample2) {return -1;}
+};
 
+class EuclideanDistanceMetric: public DistanceMetric {
+	public:
+		double distance(const std::vector<int>& sample1, const std::vector<int>& sample2);
+};
 #endif
