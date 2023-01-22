@@ -38,7 +38,29 @@ TEST(data, testEuclideanDistance_3d_distance) {
 	EXPECT_EQ(euclideanDist->distance(sample1, sample2), sqrt(27));
 }
 
+TEST(data, testData_getSample) {
+	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
+	Data sample1 = data.getSample(1);
+	
+	EXPECT_EQ(sample1.getValue(std::vector<int>{0}), 4);
+	EXPECT_EQ(sample1.getValue(std::vector<int>{1}), 5);
+	EXPECT_EQ(sample1.getValue(std::vector<int>{2}), 6);
 
+	Data sample2 = data.getSample(0);
+	
+	EXPECT_EQ(sample2.getValue(std::vector<int>{0}), 1);
+	EXPECT_EQ(sample2.getValue(std::vector<int>{1}), 2);
+	EXPECT_EQ(sample2.getValue(std::vector<int>{2}), 3);
+}
+
+TEST(data, testEuclideanDistance_2d_sample_distance) {
+	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
+	Data sample1 = data.getSample(0);
+	Data sample2 = data.getSample(1);
+
+	DistanceMetric* euclideanDist = new EuclideanDistanceMetric();
+	EXPECT_EQ(euclideanDist->distance(sample1, sample2), sqrt(27));
+}
 
 int main(int argc, char** argv) {
 	::testing::InitGoogleTest(&argc, argv);

@@ -7,6 +7,8 @@
 #include <sstream>
 #include <cstdarg>
 
+void getNumDimensionDataPoints(const std::vector<int>&, std::vector<int>&); 
+
 int DataParser::parseAsInt(std::string value) {
 	std::stringstream ss(value);
 	int intValue = 0;
@@ -46,6 +48,27 @@ Data Data::retrieveFromCSVFile(std::string filename) {
 	return data;
 }
 
+Data Data::getSample(const int sampleIndex) {
+	Data sample;
+	std::vector<int>& allDimensions = this->getDimensions();
+	for(int i = 1; i < allDimensions.size(); ++i) {
+		sample.getDimensions().push_back(allDimensions[i]);
+	}
+
+	std::vector<int>& dimensions = this->getDimensions();
+	std::vector<int> numDataPointsInEachDimension;
+	getNumDimensionDataPoints(dimensions, numDataPointsInEachDimension);
+
+	const int numDataPointsInEachSample = numDataPointsInEachDimension.front();
+	int startingIndex = numDataPointsInEachSample * sampleIndex;
+
+	for(int i = 0; i < numDataPointsInEachSample; ++i) {
+		sample.getInputVectors().push_back(this->inputVectors[startingIndex+i]);
+	}
+
+	return sample;
+}
+
 std::vector<int>& Data::getDimensions() {
 	return this->dimensions;
 }
@@ -53,6 +76,11 @@ std::vector<int>& Data::getDimensions() {
 std::vector<int>& Data::getInputVectors() {
 	return this->inputVectors;
 }
+
+const std::vector<int>& Data::getInputVectorsImmutable() const {
+	return this->inputVectors;
+}
+
 
 void getNumDimensionDataPoints(const std::vector<int>& dimensions, std::vector<int>& numDataPointsInEachDimension) {
 	numDataPointsInEachDimension.clear();

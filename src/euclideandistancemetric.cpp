@@ -17,3 +17,16 @@ double EuclideanDistanceMetric::distance(const std::vector<int>& sample1, const 
 
 	return sqrt(sumOfSquaredDifferences);
 }
+
+double EuclideanDistanceMetric::distance(const Data& sample1, const Data& sample2) const {
+	double sumOfSquaredDifferences = 0;
+	const std::vector<int>& sample1VectorValues1D = sample1.getInputVectorsImmutable();
+	const std::vector<int>& sample2VectorValues1D = sample2.getInputVectorsImmutable();
+	assert(sample1VectorValues1D.size() == sample2VectorValues1D.size());
+
+	for(int i = 0; i < sample1VectorValues1D.size(); ++i) {
+		sumOfSquaredDifferences += pow(sample1VectorValues1D[i] - sample2VectorValues1D[i], 2);
+	}
+
+	return sqrt(sumOfSquaredDifferences);
+}

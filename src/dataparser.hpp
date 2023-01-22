@@ -22,7 +22,10 @@ class Data {
 		// (2 samples, and 3 values per sample)
 		std::vector<int>& getDimensions();
 		std::vector<int>& getInputVectors();
+		const std::vector<int>& getInputVectorsImmutable() const;
 		int getValue(std::vector<int> indices);
+		Data getSample(const int index);
+		
 };
 
 /* Utility class for handling all data parsing for input data.  Will handle any alterations

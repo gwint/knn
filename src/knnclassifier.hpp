@@ -24,7 +24,7 @@ class KnnClassifier {
 
 	public:
 		KnnClassifier(int k, const Data& dataset, const DistanceMetricType& distanceMetricType);
-		int classify(const std::vector<int>& sample);
+		int classify(const Data& sample);
 };
 
 #endif
