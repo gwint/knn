@@ -62,6 +62,21 @@ TEST(data, testEuclideanDistance_2d_sample_distance) {
 	EXPECT_EQ(euclideanDist->distance(sample1, sample2), sqrt(27));
 }
 
+TEST(data, testData_testReadClassificationsFile) {
+	Data data = Data::retrieveClassificationsFromCSVFile("./test/testdatalabels.txt");
+	EXPECT_EQ(data.getDimensions()[0], 2);
+	EXPECT_EQ(data.getDimensions().size(), 1);
+	EXPECT_EQ(data.getValue(std::vector<int>{0}), 0);
+	EXPECT_EQ(data.getValue(std::vector<int>{1}), 1);
+}
+
+TEST(data, testClassifier_classify) {
+	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
+	Data classifications = Data::retrieveClassificationsFromCSVFile("./test/testdatalabels.txt");
+
+	EXPECT_EQ(true, false);
+}
+
 int main(int argc, char** argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

@@ -17,13 +17,15 @@ class KnnClassifier {
 	private:
 		DistanceMetric* _distanceMetric;
 		Data _dataset;
+		Data _classifications;
 		int _k;
 		double _getDistance();
 		void _initializeTypeToDistanceMap();
 		std::unordered_map<DistanceMetricType, DistanceMetric*> TYPE_TO_DISTANCE_FUNCTION;
+		int _getClassLabelFromNearestNeighbors(const std::vector<int>& closestSamples);
 
 	public:
-		KnnClassifier(int k, const Data& dataset, const DistanceMetricType& distanceMetricType);
+		KnnClassifier(int k, const Data& dataset, const Data& classifications, const DistanceMetricType& distanceMetricType);
 		int classify(const Data& sample);
 };
 

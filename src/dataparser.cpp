@@ -17,6 +17,26 @@ int DataParser::parseAsInt(std::string value) {
 	return intValue;
 }
 
+Data Data::retrieveClassificationsFromCSVFile(std::string filename) {
+	Data classifications;
+	std::ifstream classificationsFileStream;
+	classificationsFileStream.open(filename);
+	int numRows = 0;
+
+	if(classificationsFileStream.is_open()) {
+		for(std::string row; getline(classificationsFileStream, row);) {
+			++numRows;
+			classifications.getInputVectors().push_back(DataParser::parseAsInt(row));
+		}
+	}
+	else {
+		throw std::runtime_error("Unable to open file to read classifications.");
+	}
+
+	classifications.getDimensions().push_back(numRows);
+	return classifications;
+}
+
 Data Data::retrieveFromCSVFile(std::string filename) {
 	Data data;
 	std::ifstream fileStream;
