@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstdarg>
+#include <assert.h>
 
 void getNumDimensionDataPoints(const std::vector<int>&, std::vector<int>&); 
 
@@ -68,14 +69,14 @@ Data Data::retrieveFromCSVFile(std::string filename) {
 	return data;
 }
 
-Data Data::getSample(const int sampleIndex) {
+Data Data::getSample(const int sampleIndex) const {
 	Data sample;
-	std::vector<int>& allDimensions = this->getDimensions();
+	const std::vector<int>& allDimensions = this->getDimensionsImmutable();
 	for(int i = 1; i < allDimensions.size(); ++i) {
 		sample.getDimensions().push_back(allDimensions[i]);
 	}
 
-	std::vector<int>& dimensions = this->getDimensions();
+	const std::vector<int>& dimensions = this->getDimensionsImmutable();
 	std::vector<int> numDataPointsInEachDimension;
 	getNumDimensionDataPoints(dimensions, numDataPointsInEachDimension);
 
@@ -89,6 +90,10 @@ Data Data::getSample(const int sampleIndex) {
 	return sample;
 }
 
+const std::vector<int>& Data::getDimensionsImmutable() const {
+	return this->dimensions;
+}
+
 std::vector<int>& Data::getDimensions() {
 	return this->dimensions;
 }
@@ -99,6 +104,22 @@ std::vector<int>& Data::getInputVectors() {
 
 const std::vector<int>& Data::getInputVectorsImmutable() const {
 	return this->inputVectors;
+}
+
+int Data::getNumSamples() const {
+	return this->dimensions[0];
+}
+
+void Data::addSample(const Data& sample) {
+	const std::vector<int>& sampleDimensions = sample.getDimensionsImmutable();
+	for(int dimensionIndex = 1; dimensionIndex < this->dimensions.size(); ++dimensionIndex) {
+		assert(this->dimensions[dimensionIndex] == sampleDimensions[dimensionIndex-1]);
+	}
+	assert(sampleDimensions[0] == 1);
+
+	for(int i = 0; i < sample.getInputVectorsImmutable().size(); ++i) {
+		this->getInputVectors().push_back(sample.getInputVectorsImmutable()[i]);
+	}
 }
 
 

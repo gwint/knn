@@ -5,7 +5,7 @@
 
 #include <vector>
 
-class StatsUitls {
-	static std::vector<Data> getSplitData(const Data& data, const Data& classifications);
+class StatsUtils {
+	static std::vector<Data> getSplitData(const Data& data, const Data& classifications, double testProportions);
 };
 #endif

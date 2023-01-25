@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <math.h>
+#include <iostream>
 
 TEST(data, testDataReadFromFile_getDimensions) {
 	Data data = Data::retrieveFromCSVFile("./test/testdatafile.txt");
@@ -75,6 +76,25 @@ TEST(data, testClassifier_classify) {
 	Data classifications = Data::retrieveClassificationsFromCSVFile("./test/testdatalabels.txt");
 
 	EXPECT_EQ(true, false);
+}
+
+TEST(data, testData_testAddSample) {
+	Data data = Data::retrieveClassificationsFromCSVFile("./test/testdatalabels.txt");
+	EXPECT_EQ(data.getDimensions()[0], 2);
+	EXPECT_EQ(data.getDimensions().size(), 1);
+	EXPECT_EQ(data.getValue(std::vector<int>{0}), 0);
+	EXPECT_EQ(data.getValue(std::vector<int>{1}), 1);
+
+	Data dataCopy = Data(data);
+	std::cout << "got here" << '\n';
+
+	data.addSample(dataCopy.getSample(0));
+
+	std::cout << "got here" << '\n';
+
+	EXPECT_EQ(data.getValue(std::vector<int>{0}), 0);
+	EXPECT_EQ(data.getValue(std::vector<int>{1}), 1);
+	EXPECT_EQ(data.getValue(std::vector<int>{2}), 0);
 }
 
 int main(int argc, char** argv) {

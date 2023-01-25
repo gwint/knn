@@ -25,7 +25,10 @@ class Data {
 		std::vector<int>& getInputVectors();
 		const std::vector<int>& getInputVectorsImmutable() const;
 		int getValue(std::vector<int> indices);
-		Data getSample(const int index);
+		Data getSample(const int index) const;
+		int getNumSamples() const;
+		void addSample(const Data&);
+		const std::vector<int>& getDimensionsImmutable() const;
 		
 };
 
