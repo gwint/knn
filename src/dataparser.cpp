@@ -35,6 +35,7 @@ Data Data::retrieveClassificationsFromCSVFile(std::string filename) {
 	}
 
 	classifications.getDimensions().push_back(numRows);
+	classifications.getDimensions().push_back(1);
 	return classifications;
 }
 
@@ -44,10 +45,11 @@ Data Data::retrieveFromCSVFile(std::string filename) {
 	fileStream.open(filename);
 
 	int numRows = 0;
-	int numColumns;
+	int numColumns = 0;
 
 	if(fileStream.is_open()) {
 		for(std::string row; getline(fileStream, row);) {
+			std::cout << row << '\n';
 			++numRows;
 			std::string colValue;
 			numColumns = 0;
@@ -64,13 +66,17 @@ Data Data::retrieveFromCSVFile(std::string filename) {
 	}
 
 	data.getDimensions().push_back(numRows);
-	data.getDimensions().push_back(numColumns);
+	data.getDimensions().push_back(1);
+	if(numColumns > 1) {
+		data.getDimensions()[1] = numColumns;
+	}
 
 	return data;
 }
 
 Data Data::getSample(const int sampleIndex) const {
 	Data sample;
+	sample.getDimensions().push_back(1);
 	const std::vector<int>& allDimensions = this->getDimensionsImmutable();
 	for(int i = 1; i < allDimensions.size(); ++i) {
 		sample.getDimensions().push_back(allDimensions[i]);
@@ -137,6 +143,7 @@ void getNumDimensionDataPoints(const std::vector<int>& dimensions, std::vector<i
 	}
 }
 
+// TODO: Need check to verify set of indices passed in.
 int Data::getValue(std::vector<int> indices) {
 	std::vector<int>& dimensions = this->getDimensions();
 	std::vector<int> numDataPointsInEachDimension;
