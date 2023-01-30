@@ -24,7 +24,7 @@ std::vector<Data> StatsUtils::getSplitData(const Data& data, const Data& classif
 	Data testClassifications;
 
 	for(int i = 0; i < numSamplesTotal; ++i) {
-		if(randomIndicesForTestGroup.find(i) == randomIndicesForTestGroup.end()) {
+		if(randomIndicesForTestGroup.find(i) != randomIndicesForTestGroup.end()) {
 			const Data sample = data.getSample(i);
 			testData.addSample(sample);
 			testClassifications.addSample(classifications.getSample(i));
@@ -34,6 +34,17 @@ std::vector<Data> StatsUtils::getSplitData(const Data& data, const Data& classif
 			trainingClassifications.addSample(classifications.getSample(i));
 		}
 	}
+
+	testData.getDimensions().insert(testData.getDimensions().begin(), data.getDimensionsImmutable().begin(), data.getDimensionsImmutable().end());
+	testData.getDimensions()[0] = numSamplesInTestGroup;
+	testClassifications.getDimensions().push_back(numSamplesInTestGroup);
+	testClassifications.getDimensions().push_back(1);
+
+	trainingData.getDimensions().insert(trainingData.getDimensions().begin(), data.getDimensionsImmutable().begin(), data.getDimensionsImmutable().end());
+	trainingData.getDimensions()[0] = data.getNumSamples() - numSamplesInTestGroup;
+	
+	trainingClassifications.getDimensions().insert(trainingClassifications.getDimensions().begin(), classifications.getDimensionsImmutable().begin(), classifications.getDimensionsImmutable().end());
+	trainingClassifications.getDimensions()[0] = data.getNumSamples() - numSamplesInTestGroup;
 
 	return std::vector<Data>{trainingData, trainingClassifications, testData, testClassifications};
 }

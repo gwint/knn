@@ -49,7 +49,6 @@ Data Data::retrieveFromCSVFile(std::string filename) {
 
 	if(fileStream.is_open()) {
 		for(std::string row; getline(fileStream, row);) {
-			std::cout << row << '\n';
 			++numRows;
 			std::string colValue;
 			numColumns = 0;
@@ -126,6 +125,10 @@ void Data::addSample(const Data& sample) {
 	for(int i = 0; i < sample.getInputVectorsImmutable().size(); ++i) {
 		this->getInputVectors().push_back(sample.getInputVectorsImmutable()[i]);
 	}
+}
+
+bool Data::operator==(const Data& other) const {
+	return this->getDimensionsImmutable() == other.getDimensionsImmutable() && this->getInputVectorsImmutable() == other.getInputVectorsImmutable();
 }
 
 

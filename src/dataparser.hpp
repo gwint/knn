@@ -29,7 +29,7 @@ class Data {
 		int getNumSamples() const;
 		void addSample(const Data&);
 		const std::vector<int>& getDimensionsImmutable() const;
-		
+		bool operator==(const Data&) const;
 };
 
 /* Utility class for handling all data parsing for input data.  Will handle any alterations

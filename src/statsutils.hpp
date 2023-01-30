@@ -6,6 +6,7 @@
 #include <vector>
 
 class StatsUtils {
-	static std::vector<Data> getSplitData(const Data& data, const Data& classifications, double testProportions);
+	public:
+		static std::vector<Data> getSplitData(const Data& data, const Data& classifications, double testProportions);
 };
 #endif
