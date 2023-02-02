@@ -25,8 +25,8 @@ class KnnClassifier {
 		int _getClassLabelFromNearestNeighbors(const std::vector<int>& closestSamples);
 
 	public:
-		KnnClassifier(int k, const Data& dataset, const Data& classifications, const DistanceMetricType& distanceMetricType);
-		int classify(const Data& sample);
+		KnnClassifier(int k, const Data& dataset, const Data& classifications, const DistanceMetricType& distanceMetricType = DistanceMetricType::EUCLIDEAN);
+		std::vector<int> classify(const Data& sample);
 };
 
 #endif

@@ -48,3 +48,11 @@ std::vector<Data> StatsUtils::getSplitData(const Data& data, const Data& classif
 
 	return std::vector<Data>{trainingData, trainingClassifications, testData, testClassifications};
 }
+
+std::vector<std::vector<int>> StatsUtils::getConfusionMatrix(const Data& testClassifications, const Data& actualClassifications) {
+	// TODO: verify sizes of the two data objects
+	assert(testClassifications.getNumSamples() == actualClassifications.getNumSamples());
+	assert(testClassifications.getInputVectorsImmutable().size() == actualClassifications.getInputVectorsImmutable().size());
+	std::vector<std::vector<int>> confusionMatrix;
+	return confusionMatrix;
+}
