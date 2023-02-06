@@ -49,10 +49,35 @@ std::vector<Data> StatsUtils::getSplitData(const Data& data, const Data& classif
 	return std::vector<Data>{trainingData, trainingClassifications, testData, testClassifications};
 }
 
-std::vector<std::vector<int>> StatsUtils::getConfusionMatrix(const Data& testClassifications, const Data& actualClassifications) {
-	// TODO: verify sizes of the two data objects
+std::vector<std::vector<double>> StatsUtils::getConfusionMatrix(const Data& testClassifications, const Data& actualClassifications) {
 	assert(testClassifications.getNumSamples() == actualClassifications.getNumSamples());
 	assert(testClassifications.getInputVectorsImmutable().size() == actualClassifications.getInputVectorsImmutable().size());
-	std::vector<std::vector<int>> confusionMatrix;
-	return confusionMatrix;
+
+	double truePositiveProportion = _getTruePositiveProportion(actualClassifications, testClassifications);
+
+	double falsePositiveProportion = _getFalsePositiveProportion(actualClassifications, testClassifications);
+
+	double trueNegativeProportion = _getTrueNegativeProportion(actualClassifications, testClassifications);
+
+	double falseNegativeProportion = _getFalseNegativeProportion(actualClassifications, testClassifications);
+	
+	return std::vector<std::vector<double>>{std::vector<double>{truePositiveProportion, falsePositiveProportion}, std::vector<double>{falseNegativeProportion, trueNegativeProportion}};
 }
+
+double StatsUtils::_getTrueNegativeProportion(const Data& actual, const Data& test) {
+	return 0.0;
+}
+
+double StatsUtils::_getFalseNegativeProportion(const Data& actual, const Data& test) {
+	return 0.0;
+}
+
+double StatsUtils::_getTruePositiveProportion(const Data& actual, const Data& test) {
+	return 0.0;
+}
+
+double StatsUtils::_getFalsePositiveProportion(const Data& actual, const Data& test) {
+	return 0.0;
+}
+
+
